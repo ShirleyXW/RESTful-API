@@ -3,3 +3,10 @@
   to = "/search.html"
   status = 301
   force = true
+
+
+[[redirects]]
+  from = "/COMP4537/labs/4/store.html"
+  to = "/store.html"
+  status = 301
+  force = true
