@@ -1,0 +1,5 @@
+[[redirects]]
+  from = "/COMP4537/labs/4/search.html"
+  to = "/search.html"
+  status = 301
+  force = true
