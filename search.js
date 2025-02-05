@@ -9,15 +9,23 @@ function search() {
     xhttp.open("GET", `https://bcit-anthony-sh-s.com/api/definition?word=${queryWord}`, true);
     xhttp.send();
     xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            const response = JSON.parse(this.responseText);
-            if (response.message) {
-                definition.value = response.message.definition;
-                console.log(response.message.definition);
-                display.innerHTML = message.getSuccess;
+        if (this.readyState == 4) {
+            const response  = JSON.parse(this.responseText);
+            if (this.status == 200) {
+                try {
+                    if (response.message) {
+                        definition.value = response.message.definition;
+                        console.log(response.message.definition);
+                        display.innerHTML = message.getSuccess;
+                    }
+                } catch (error) {
+                    console.error(error);
+                    definition.value = "";
+                    display.innerHTML = response.message;
+                }
             } else {
                 definition.value = "";
-                display.innerHTML = message.getFail;
+                display.innerHTML = response.message;
             }
         }
     }

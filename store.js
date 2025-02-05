@@ -22,25 +22,24 @@ class Dictionary{
 
 const dictionary = new Dictionary();
 
-function isValidInput(){
+function isValidInput(word, definition){
 
-    const word = document.getElementById("word").value;
-    const definition = document.getElementById("definition").value;
     if(word == "" || definition == ""){
         return false;
-    } else if (typeof word !== "string" || typeof definition !== "string"){
+    }
+    if (typeof word !== "string" || !isNaN(word)) {
         return false;
     }
     return true;
 }
 
 function store(){
-    const wordName = document.getElementById("word").value;
-    const definition = document.getElementById("definition").value;
+    const wordName = document.getElementById("word").value.trim();
+    const definition = document.getElementById("definition").value.trim();
     const display = document.getElementById("message");
     
 
-    if(!isValidInput()){
+    if(!isValidInput(wordName, definition)){
         display.innerHTML = message.invalidInput;
         return;
     } else {
@@ -53,12 +52,21 @@ function store(){
     const data = JSON.stringify(word);
     xhttp.send(data);
     xhttp.onreadystatechange = function(){
-        if (this.readyState == 4 && this.status == 0){
-            console.log("request failed");
+        try{
+            
+            if (this.readyState == 4 && this.status == 409){
+                const response  = JSON.parse(this.responseText);
+                display.innerHTML = response.message;
+            }
+            if(this.readyState == 4 && this.status == 200){
+                const response  = JSON.parse(this.responseText);
+                display.innerHTML = response.message;
+            }
+        } catch (error){
+            console.log(error);
         }
-        if(this.readyState == 4 && this.status == 200){
-            console.log("the content received:",this.responseText);
-        }
+        
+        
     }
 }
 
