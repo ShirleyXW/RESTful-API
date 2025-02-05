@@ -42,8 +42,6 @@ function store(){
     if(!isValidInput(wordName, definition)){
         display.innerHTML = message.invalidInput;
         return;
-    } else {
-        display.innerHTML = message.postSuccess;
     }
 
     const word = new Word(wordName, definition);
@@ -56,6 +54,7 @@ function store(){
             
             if (this.readyState == 4 && this.status == 409){
                 const response  = JSON.parse(this.responseText);
+                document.getElementById("definition").value = "";
                 display.innerHTML = response.message;
             }
             if(this.readyState == 4 && this.status == 200){
