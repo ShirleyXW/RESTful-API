@@ -150,9 +150,10 @@ class RequestHandler {
         this.handleResponse(res, 500, data);
     }
     handleResponse(res, statusCode, data) {
-        res.writeHead(statusCode, {
-            "Content-Type": "application/json",
+        res.writeHead(204, {
             "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS, GET, POST, PUT, DELETE",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
         });
         res.end(JSON.stringify(data));
     }
