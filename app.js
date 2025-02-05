@@ -155,7 +155,7 @@ class RequestHandler {
             return;
         }
         res.writeHead(statusCode, {
-            "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS, GET, POST, PUT, DELETE",
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
         });
