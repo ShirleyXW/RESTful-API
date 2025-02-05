@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Store Word</title>
+    <title>Search Word</title>
     <meta charset="UTF-8">
     <meta name="description" content="An example webpage.">
 
@@ -11,17 +11,19 @@
 <body>
     <h1>Hello, Friend</h1>
     <form>
+        <p>Searh for a word</p>
         <label for="word" style="margin-right:6px ;">Word: </label>
         <input type="text" id="word" name="word" required>
         <br>
         <br>
         <div>
+            <label for="definition" style="display: block; margin-bottom: 6px;">Definition: </label>
             <textarea id="definition" name="definition" required placeholder="definition"></textarea>
         </div>
     </form>
-    <button type="button" id="submit">sumbit</button>
+    <button type="button" id="search">Search</button>
     <div id="message"></div>
-    <script type="module" src="/store.js"></script> 
+    <script type="module" src="/search.js"></script> 
 </body>
 
 </html>

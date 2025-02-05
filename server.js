@@ -8,5 +8,25 @@ http.createServer(function (req, res) {
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',  // Allow these methods
         'Access-Control-Allow-Headers': 'Content-Type',  // Allow these headers
     });
-    res.end(`Hello ${qury.name}!`);
-}).listen(8000);
+    if (req.method === 'POST') {
+        console.log("Request receiveds1")
+        let body = '';
+        req.on('data', chunk => {
+            if (chunk !== null){
+                body += chunk.toString();
+            }
+        });
+        req.on('end', () => {
+            try{
+                const data = JSON.parse(body);
+                console.log(data);
+                res.end(JSON.stringify({message: "Data received"}));
+            } catch (e) {
+                res.end(JSON.stringify({message: "Invalid data"}));
+            }
+        });
+    }
+    else {
+        res.end("Hello World");
+    }
+}).listen(8080);
