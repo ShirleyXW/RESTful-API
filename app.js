@@ -11,15 +11,17 @@ class DictionaryController {
         return this.dictionary;
     }
     findDefinition(keyword) {
-        this.dictionary.map((each) => {
-            if (each[keyword]) {
-                return each[definition];
-            }
-        });
-        return null;
+        const definition = this.dictionary.find((each) => each.keyword == keyword.toLowerCase());
+        return definition ? definition : null;
     }
     addDefinition(keyword, definition) {
-        this.dictionary.push({ keyword: keyword, definition: definition });
+        const exist = this.dictionary.some((each) => each.keyword == keyword.toLowerCase());
+        if (exist) {
+            this.dictionary.push({ keyword: keyword.toLowerCase(), definition: definition });
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -91,7 +93,7 @@ class RequestHandler {
                 const addResult = this.dictController.addDefinition(word, definition);
                 if (!addResult) {
                     const response = {
-                        success: true,
+                        success: false,
                         message: `Error: ${word} already exists in dictionary.`,
                         requestCount: this.requestCount,
                     };
@@ -162,7 +164,7 @@ class Server {
         this.requestHandler = new RequestHandler(this.dictController);
     }
     run() {
-        const server = http.createServer(function (req, res) {
+        const server = http.createServer((req, res) => {
             const parsedUrl = url.parse(req.url, true);
             const pathName = parsedUrl.pathname;
             const query = parsedUrl.query;
