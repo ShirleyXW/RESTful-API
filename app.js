@@ -67,7 +67,7 @@ class RequestHandler {
         req.on("data", (chunk) => {
             body += chunk.toString();
         });
-        console.log(body);
+        console.log(`Received body: ${body}`);
         req.on("end", () => {
             try {
                 if (!body) {
@@ -149,8 +149,12 @@ class RequestHandler {
         this.addRequestCount(data);
         this.handleResponse(res, 500, data);
     }
-    handleResponse(res, statusCode, data) {
-        res.writeHead(204, {
+    handleResponse(res, statusCode, data = null) {
+        if (statusCode === 204) {
+            res.end();
+            return;
+        }
+        res.writeHead(statusCode, {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS, GET, POST, PUT, DELETE",
             "Access-Control-Allow-Headers": "Content-Type, Authorization",
@@ -174,6 +178,8 @@ class Server {
                     this.requestHandler.handlePostRequest(req, res);
                 } else if (req.method === "GET") {
                     this.requestHandler.handleGetRequest(req, res, query);
+                } else if (req.method === "OPTIONS") {
+                    this.requestHandler.handleResponse(res, 204);
                 } else {
                     const response = {
                         success: false,
