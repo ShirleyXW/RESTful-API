@@ -17,10 +17,10 @@ class DictionaryController {
     addDefinition(keyword, definition) {
         const exist = this.dictionary.some((each) => each.keyword == keyword.toLowerCase());
         if (exist) {
+            return false;
+        } else {
             this.dictionary.push({ keyword: keyword.toLowerCase(), definition: definition });
             return true;
-        } else {
-            return false;
         }
     }
 }
