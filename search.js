@@ -25,7 +25,7 @@ function search() {
                 }
             } else {
                 definition.value = "";
-                display.innerHTML = response.message;
+                display.innerHTML = `Requst: ${response.requestCount}: ${response.message}`;
             }
         }
     }
